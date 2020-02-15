@@ -1,5 +1,6 @@
 package co.com.todo.uno.kardex.config;
 
+import co.com.todo.uno.kardex.services.KardexServices;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
 import io.swagger.jaxrs.listing.SwaggerSerializers;
@@ -25,6 +26,7 @@ public class RestApplication extends Application {
         Set<Class<?>> resources = new java.util.HashSet<>();
         resources.add(ApiListingResource.class);
         resources.add(SwaggerSerializers.class);
+        resources.add(KardexServices.class);
         return resources;
     }
 }
