@@ -1,0 +1,64 @@
+apply plugin: 'ear'
+apply plugin: 'java'
+apply plugin: 'war'
+
+group = 'co.com.todo.uno.kardex'
+
+test.dependsOn(":KardexServicesEJB:test",":KardexServicesWeb:test")
+
+dependencies {
+
+    deploy project(path:':KardexServicesEJB', configuration:'archives')
+    deploy project(path:':KardexServicesWeb', configuration:'archives')
+
+    earlib 'org.jboss.logging:jboss-logging:3.1.4.GA'
+    earlib 'org.jboss.spec:jboss-javaee-6.0:3.0.3.Final'
+    earlib 'org.springframework.data:spring-data-jpa:1.11.12.RELEASE'
+    earlib group: 'io.swagger', name: 'swagger-jaxrs', version: '1.5.12'
+    earlib group: 'org.eclipse.jetty', name: 'jetty-servlets', version: '9.3.0.M2', ext: 'jar'
+    earlib group: 'org.eclipse.jetty', name: 'jetty-util', version: '9.3.0.M2', ext: 'jar'
+
+}
+
+task deploy(dependsOn: 'build' , type: Copy) {
+
+    println "Configurando Despliegue"
+
+    from('build/libs/') {
+        include '*.ear'
+    }
+
+    def target="${project.name}.ear"
+    def JBOSS_HOME = System.getenv('JBOSS_HOME')
+    
+    into "$JBOSS_HOME"+"/standalone/deployments/"
+    
+    def ok=new File("${JBOSS_HOME}/standalone/deployments/${target}.deployed");
+    def nok=new File("${JBOSS_HOME}/standalone/deployments/${target}.failed");   
+
+    doFirst {
+        println "Borrando ear anteriores"
+        if(ok.exists()) { ok.delete() }
+        if(nok.exists()) { nok.delete() }
+
+    }
+
+    doLast {
+        println "ejecutando ear..."
+        def deployed=false
+        for(def i=0;i<80;i++) {
+         
+            if(ok.exists()) { deployed=true; break }
+            if(nok.exists()) { break }
+            sleep(500);
+        }
+
+        if(deployed) { println("despligue exitoso.") }
+        else { throw new RuntimeException("Despligue fallido, ver jboss logs!") }
+    }
+
+    ear {
+        archiveName = "${baseName}.${extension}"
+    }
+
+}

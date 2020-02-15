@@ -1,0 +1,4 @@
+include ':KardexServicesEJB'
+include ':KardexServicesWeb'
+include ':KardexServicesEAR'
+rootProject.name='KardexServices'  

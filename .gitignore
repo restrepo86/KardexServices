@@ -1,0 +1,44 @@
+.gradle
+.metadata
+.recommenders
+.settings
+Servers
+RemoteSystemsTempFiles
+/build
+*.classpath
+*.project
+*.tern-project
+.nb-gradle/
+*.class
+target/
+
+
+# Gradle
+**/.gradle/
+**/gradle/
+**/gradlew
+**/gradlew.bat
+
+
+# Eclipse Generated Resources
+**/bin/
+**/build/
+*.class
+.classpath
+.project
+
+# Eclipse Workspace
+**/.settings/
+/.metadata/
+/RemoteSystemsTempFiles/
+
+/.nb-gradle/
+
+# Netbeans Generated
+nbproject/
+
+.nb-gradle-properties
+
+# IntelliJ IDEA
+.idea/
+.iml

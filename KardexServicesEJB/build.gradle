@@ -1,0 +1,44 @@
+apply plugin: 'java'
+apply plugin: "jacoco"
+
+jacoco {
+    toolVersion = "0.7.4+"
+}
+
+[ compileJava, compileTestJava ]*.options*.encoding = 'UTF-8'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+group = 'co.com.todo.uno.kardex'
+
+dependencies {
+
+    compile 'org.jboss.spec:jboss-javaee-6.0:3.0.3.Final'
+    compile 'org.springframework.data:spring-data-jpa:1.11.12.RELEASE'
+    compile 'org.jboss.logging:jboss-logging:3.1.4.GA'
+
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.mockito:mockito-all:1.9.5'
+    testCompile 'org.jboss.resteasy:resteasy-jaxrs:3.0.2.Final'
+    testCompile 'org.projectlombok.test:test-maven-lombok:1.16.6.1'
+    testCompile 'uk.co.jemos.podam:podam:5.2.0.RELEASE'
+
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    test {
+        reports.html.enabled = false
+    }
+}
+
+task testReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/allTests")
+    reportOn subprojects*.test
+}
+
+jar {
+    archiveName = "${baseName}.${extension}"
+}

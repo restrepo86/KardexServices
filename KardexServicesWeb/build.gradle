@@ -1,0 +1,41 @@
+apply plugin: 'war'
+apply plugin: "jacoco"
+
+[ compileJava, compileTestJava ]*.options*.encoding = 'UTF-8'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+group = 'co.com.todo.uno.kardex'
+
+dependencies {
+
+
+    providedCompile project(':KardexServicesEJB')
+    providedCompile 'org.jboss.spec:jboss-javaee-6.0:3.0.3.Final'
+    providedCompile group: 'io.swagger', name: 'swagger-jersey-jaxrs', version: '1.5.0'
+    providedCompile 'org.eclipse.jetty:jetty-servlets:9.3.0.M2'
+
+    testCompile project(':KardexServicesEJB')
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.mockito:mockito-all:1.9.5'
+    testCompile 'org.easytesting:fest-assert-core:2.0M10'
+    testCompile 'uk.co.jemos.podam:podam:5.2.0.RELEASE'
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    test {
+        reports.html.enabled = false
+    }
+}
+
+task testReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/allTests")
+    reportOn subprojects*.test
+}
+
+war {
+    archiveName = "${baseName}.${extension}"
+}
