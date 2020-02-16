@@ -1,5 +1,7 @@
 package co.com.todo.uno.kardex.mapper;
 
+import co.com.todo.uno.kardex.dto.EntryRequestDTO;
+import co.com.todo.uno.kardex.dto.EntryValidationsDTO;
 import co.com.todo.uno.kardex.dto.ProductRequestDTO;
 import co.com.todo.uno.kardex.dto.ProductValidationsDTO;
 
@@ -18,5 +20,12 @@ public abstract class DomainMapper {
         return productValidationsDTO;
     }
 
-
+    public static EntryValidationsDTO buildRegisterEntryValidationsDTO(EntryRequestDTO entryRequestDTO) {
+        EntryValidationsDTO entryValidationsDTO = new EntryValidationsDTO();
+        entryValidationsDTO.setAmount(entryRequestDTO.getAmount());
+        entryValidationsDTO.setProductId(entryRequestDTO.getProductId());
+        entryValidationsDTO.setTotalValue(entryRequestDTO.getTotalValue());
+        entryValidationsDTO.setUnitValue(entryRequestDTO.getUnitValue());
+        return entryValidationsDTO;
+    }
 }

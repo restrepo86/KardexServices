@@ -1,13 +1,16 @@
 package co.com.todo.uno.kardex.domain.services;
 
 import co.com.todo.uno.kardex.constantes.Errors;
+import co.com.todo.uno.kardex.domain.validation.entry.KardexRegisterEntryValidations;
+import co.com.todo.uno.kardex.dto.EntryRequestDTO;
 import co.com.todo.uno.kardex.dto.KardexHttpResponseDTO;
-import co.com.todo.uno.kardex.exceptions.EmptyPropertiesException;
 import co.com.todo.uno.kardex.exceptions.KardexAddProductValidationsException;
+import co.com.todo.uno.kardex.exceptions.KardexRegisterEntryValidationsException;
 import co.com.todo.uno.kardex.mapper.DomainMapper;
 import co.com.todo.uno.kardex.domain.validation.add.product.KardexAddProductValidations;
 import co.com.todo.uno.kardex.dto.ProductRequestDTO;
 import co.com.todo.uno.kardex.response.ManagementResponse;
+import co.com.todo.uno.kardex.services.EntryServices;
 import co.com.todo.uno.kardex.services.ProductServices;
 import org.jboss.logging.Logger;
 
@@ -17,7 +20,9 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import static co.com.todo.uno.kardex.response.ManagementResponse.KARDEX_700;
+import static co.com.todo.uno.kardex.response.ManagementResponse.KARDEX_701;
 import static co.com.todo.uno.kardex.response.ManagementResponse.KARDEX_800;
+import static co.com.todo.uno.kardex.response.ManagementResponse.KARDEX_801;
 
 @Stateless
 public class KardexDomainServices {
@@ -29,6 +34,12 @@ public class KardexDomainServices {
 
     @Inject
     private ProductServices productServices;
+
+    @Inject
+    private EntryServices entryServices;
+
+    @Inject
+    private KardexRegisterEntryValidations karderRegisterEntryValidations;
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public KardexHttpResponseDTO addProduct(ProductRequestDTO productRequestDTO) {
@@ -46,6 +57,24 @@ public class KardexDomainServices {
         }
 
         return kardexHttpResponseDTO;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public KardexHttpResponseDTO registerEntry(EntryRequestDTO entryRequestDTO) {
+
+        KardexHttpResponseDTO validationRegisterEntryResponse;
+        try {
+            karderRegisterEntryValidations.execute(DomainMapper.buildRegisterEntryValidationsDTO(entryRequestDTO));
+            entryServices.registerEntry(entryRequestDTO);
+            validationRegisterEntryResponse = ManagementResponse.getSuccessfulAnswers(KARDEX_701);
+        } catch (KardexRegisterEntryValidationsException kardexRegisterEntryValidationsException) {
+            validationRegisterEntryResponse = ManagementResponse.getValidationRegisterEntryResponse(kardexRegisterEntryValidationsException.getMessage());
+        } catch (Exception exception) {
+            LOGGER.error(Errors.NO_SE_PUDO_AGREGAR_ENTRADA_A_INVENTARIO_POR, exception);
+            validationRegisterEntryResponse = ManagementResponse.getErrorAnswer(KARDEX_801);
+        }
+        return validationRegisterEntryResponse;
 
     }
 

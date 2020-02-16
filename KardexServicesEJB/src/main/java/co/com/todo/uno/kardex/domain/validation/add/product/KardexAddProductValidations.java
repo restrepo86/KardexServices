@@ -1,8 +1,6 @@
 package co.com.todo.uno.kardex.domain.validation.add.product;
 
 import co.com.todo.uno.kardex.dto.ProductValidationsDTO;
-import co.com.todo.uno.kardex.exceptions.EmptyPropertiesException;
-import co.com.todo.uno.kardex.exceptions.KardexAddProductException;
 import co.com.todo.uno.kardex.exceptions.KardexAddProductValidationsException;
 
 import javax.inject.Inject;

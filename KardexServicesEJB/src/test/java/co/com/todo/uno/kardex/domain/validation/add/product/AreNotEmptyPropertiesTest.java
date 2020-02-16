@@ -1,7 +1,7 @@
 package co.com.todo.uno.kardex.domain.validation.add.product;
 
 import co.com.todo.uno.kardex.dto.ProductValidationsDTO;
-import co.com.todo.uno.kardex.exceptions.EmptyPropertiesException;
+import co.com.todo.uno.kardex.exceptions.AddProductEmptyPropertiesException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,59 +26,59 @@ public class AreNotEmptyPropertiesTest {
     }
 
     @Test
-    public void shouldValidateAreNotEmptyProperties() throws EmptyPropertiesException {
+    public void shouldValidateAreNotEmptyProperties() throws AddProductEmptyPropertiesException {
         areNotEmptyProperties.validate(productValidationsDTO);
     }
 
-    @Test(expected = EmptyPropertiesException.class)
-    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByAllPropertiesNull() throws EmptyPropertiesException {
+    @Test(expected = AddProductEmptyPropertiesException.class)
+    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByAllPropertiesNull() throws AddProductEmptyPropertiesException {
         areNotEmptyProperties.validate(new ProductValidationsDTO());
     }
 
-    @Test(expected = EmptyPropertiesException.class)
-    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByUnitValueNull() throws EmptyPropertiesException {
+    @Test(expected = AddProductEmptyPropertiesException.class)
+    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByUnitValueNull() throws AddProductEmptyPropertiesException {
         productValidationsDTO.setUnitValue(null);
         areNotEmptyProperties.validate(productValidationsDTO);
     }
 
-    @Test(expected = EmptyPropertiesException.class)
-    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByUnitValueZero() throws EmptyPropertiesException {
+    @Test(expected = AddProductEmptyPropertiesException.class)
+    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByUnitValueZero() throws AddProductEmptyPropertiesException {
         productValidationsDTO.setUnitValue(0l);
         areNotEmptyProperties.validate(productValidationsDTO);
     }
 
-    @Test(expected = EmptyPropertiesException.class)
-    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByProductNameNull() throws EmptyPropertiesException {
+    @Test(expected = AddProductEmptyPropertiesException.class)
+    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByProductNameNull() throws AddProductEmptyPropertiesException {
         productValidationsDTO.setProductName(null);
         areNotEmptyProperties.validate(productValidationsDTO);
     }
 
-    @Test(expected = EmptyPropertiesException.class)
-    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByProductNameEmpty() throws EmptyPropertiesException {
+    @Test(expected = AddProductEmptyPropertiesException.class)
+    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByProductNameEmpty() throws AddProductEmptyPropertiesException {
         productValidationsDTO.setProductName("");
         areNotEmptyProperties.validate(productValidationsDTO);
     }
 
-    @Test(expected = EmptyPropertiesException.class)
-    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByMinimumAmountNull() throws EmptyPropertiesException {
+    @Test(expected = AddProductEmptyPropertiesException.class)
+    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByMinimumAmountNull() throws AddProductEmptyPropertiesException {
         productValidationsDTO.setMinimumAmount(null);
         areNotEmptyProperties.validate(productValidationsDTO);
     }
 
-    @Test(expected = EmptyPropertiesException.class)
-    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByMinimumAmountZero() throws EmptyPropertiesException {
+    @Test(expected = AddProductEmptyPropertiesException.class)
+    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByMinimumAmountZero() throws AddProductEmptyPropertiesException {
         productValidationsDTO.setMinimumAmount(0l);
         areNotEmptyProperties.validate(productValidationsDTO);
     }
 
-    @Test(expected = EmptyPropertiesException.class)
-    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByMaximumAmountNull() throws EmptyPropertiesException {
+    @Test(expected = AddProductEmptyPropertiesException.class)
+    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByMaximumAmountNull() throws AddProductEmptyPropertiesException {
         productValidationsDTO.setMaximumAmount(null);
         areNotEmptyProperties.validate(productValidationsDTO);
     }
 
-    @Test(expected = EmptyPropertiesException.class)
-    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByMaximumAmountZero() throws EmptyPropertiesException {
+    @Test(expected = AddProductEmptyPropertiesException.class)
+    public void shouldValidateAreNotEmptyPropertiesAndThrowExceptionByMaximumAmountZero() throws AddProductEmptyPropertiesException {
         productValidationsDTO.setMaximumAmount(0l);
         areNotEmptyProperties.validate(productValidationsDTO);
     }

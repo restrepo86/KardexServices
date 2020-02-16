@@ -1,6 +1,7 @@
 package co.com.todo.uno.kardex.services;
 
 import co.com.todo.uno.kardex.domain.services.KardexDomainServices;
+import co.com.todo.uno.kardex.dto.EntryRequestDTO;
 import co.com.todo.uno.kardex.dto.KardexHttpResponseDTO;
 import co.com.todo.uno.kardex.dto.ProductRequestDTO;
 import co.com.todo.uno.kardex.mapper.response.HttpResponse;
@@ -21,7 +22,7 @@ public class KardexServices {
     @Inject
     private HttpResponse httpResponse;
 
-    @Path("/")
+    @Path("/producto")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addProduct(ProductRequestDTO productRequestDTO) {
@@ -29,4 +30,11 @@ public class KardexServices {
         return httpResponse.buildResponse(kardexHttpResponseDTO);
     }
 
+    @Path("/entrada")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response registerEntry(EntryRequestDTO entryRequestDTO) {
+        KardexHttpResponseDTO kardexHttpResponseDTO = kardexDomainServices.registerEntry(entryRequestDTO);
+        return httpResponse.buildResponse(kardexHttpResponseDTO);
+    }
 }

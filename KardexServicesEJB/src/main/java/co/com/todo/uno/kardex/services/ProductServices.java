@@ -30,4 +30,7 @@ public class ProductServices {
         return product;
     }
 
+    public boolean productExists(Long productId) {
+        return productId == null ? false : iProductRepository.exists(productId);
+    }
 }

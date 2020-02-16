@@ -1,10 +1,14 @@
 package co.com.todo.uno.kardex.domain.services;
 
 import co.com.todo.uno.kardex.domain.validation.add.product.KardexAddProductValidations;
+import co.com.todo.uno.kardex.domain.validation.entry.KardexRegisterEntryValidations;
+import co.com.todo.uno.kardex.dto.EntryRequestDTO;
+import co.com.todo.uno.kardex.dto.EntryValidationsDTO;
 import co.com.todo.uno.kardex.dto.ProductRequestDTO;
 import co.com.todo.uno.kardex.dto.ProductValidationsDTO;
-import co.com.todo.uno.kardex.exceptions.EmptyPropertiesException;
 import co.com.todo.uno.kardex.exceptions.KardexAddProductValidationsException;
+import co.com.todo.uno.kardex.exceptions.KardexRegisterEntryValidationsException;
+import co.com.todo.uno.kardex.services.EntryServices;
 import co.com.todo.uno.kardex.services.ProductServices;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +32,14 @@ public class KardexDomainServicesTest {
     @Mock
     private ProductServices productServices;
 
+    @Mock
+    private EntryServices entryServices;
+
+    @Mock
+    private KardexRegisterEntryValidations kardexRegisterEntryValidations;
+
     private ProductRequestDTO productRequestDTO;
+    private EntryRequestDTO entryRequestDTO;
 
     @Before
     public void setUp() {
@@ -39,6 +50,12 @@ public class KardexDomainServicesTest {
         productRequestDTO.setMinimumAmount(10l);
         productRequestDTO.setMaximumAmount(60l);
 
+        entryRequestDTO = new EntryRequestDTO();
+        entryRequestDTO.setProductId(1234l);
+        entryRequestDTO.setAmount(2l);
+        entryRequestDTO.setTotalValue(4l);
+        entryRequestDTO.setUnitValue(2l);
+
     }
 
     @Test
@@ -48,9 +65,21 @@ public class KardexDomainServicesTest {
     }
 
     @Test
-    public void shouldBeAddProductToInventory() {
+    public void shouldAddProductToInventory() {
         kardexDomainServices.addProduct(productRequestDTO);
         verify(productServices).addProduct(productRequestDTO);
+    }
+
+    @Test
+    public void shouldRegisterEntryProductToInventory() {
+        kardexDomainServices.registerEntry(entryRequestDTO);
+        verify(entryServices).registerEntry(entryRequestDTO);
+    }
+
+    @Test
+    public void shouldValidateEntryRequest() throws KardexRegisterEntryValidationsException {
+        kardexDomainServices.registerEntry(entryRequestDTO);
+        verify(kardexRegisterEntryValidations).execute(any(EntryValidationsDTO.class));
     }
 
 }
