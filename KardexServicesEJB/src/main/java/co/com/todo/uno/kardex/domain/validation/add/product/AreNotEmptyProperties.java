@@ -7,6 +7,8 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static co.com.todo.uno.kardex.response.ManagementResponse.KARDEX_900;
+
 public class AreNotEmptyProperties implements IAddProductValidation {
 
     @Override
@@ -20,7 +22,7 @@ public class AreNotEmptyProperties implements IAddProductValidation {
 
         boolean itHasEmptyProperties = existsEmptyProperties.stream().anyMatch(Boolean::booleanValue);
         if (itHasEmptyProperties) {
-            throw new EmptyPropertiesException("El producto que desea agregar, contiene propiedades vacias o de valor cero");
+            throw new EmptyPropertiesException(KARDEX_900);
         }
 
     }

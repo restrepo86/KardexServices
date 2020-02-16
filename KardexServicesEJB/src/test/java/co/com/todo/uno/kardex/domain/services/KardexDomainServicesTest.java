@@ -4,6 +4,7 @@ import co.com.todo.uno.kardex.domain.validation.add.product.KardexAddProductVali
 import co.com.todo.uno.kardex.dto.ProductRequestDTO;
 import co.com.todo.uno.kardex.dto.ProductValidationsDTO;
 import co.com.todo.uno.kardex.exceptions.EmptyPropertiesException;
+import co.com.todo.uno.kardex.exceptions.KardexAddProductValidationsException;
 import co.com.todo.uno.kardex.services.ProductServices;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,13 +42,13 @@ public class KardexDomainServicesTest {
     }
 
     @Test
-    public void shouldRequestValidateBeforeAddProductToInventory() throws EmptyPropertiesException {
+    public void shouldRequestValidateBeforeAddProductToInventory() throws KardexAddProductValidationsException {
         kardexDomainServices.addProduct(productRequestDTO);
         verify(kardexAddProductValidations).execute(any(ProductValidationsDTO.class));
     }
 
     @Test
-    public void shouldBeAddProductToInventory() throws EmptyPropertiesException {
+    public void shouldBeAddProductToInventory() {
         kardexDomainServices.addProduct(productRequestDTO);
         verify(productServices).addProduct(productRequestDTO);
     }

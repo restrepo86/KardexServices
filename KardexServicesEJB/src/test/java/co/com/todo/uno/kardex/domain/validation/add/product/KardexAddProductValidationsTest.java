@@ -2,6 +2,7 @@ package co.com.todo.uno.kardex.domain.validation.add.product;
 
 import co.com.todo.uno.kardex.dto.ProductValidationsDTO;
 import co.com.todo.uno.kardex.exceptions.EmptyPropertiesException;
+import co.com.todo.uno.kardex.exceptions.KardexAddProductValidationsException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +29,7 @@ public class KardexAddProductValidationsTest {
     }
 
     @Test
-    public void shouldValidateProductPropertiesAreNotEmptyBeforeAddToInventory() throws EmptyPropertiesException {
+    public void shouldValidateProductPropertiesAreNotEmptyBeforeAddToInventory() throws KardexAddProductValidationsException {
         kardexAddProductValidations.execute(productValidationsDTO);
         verify(areNotEmptyProperties).validate(productValidationsDTO);
     }
