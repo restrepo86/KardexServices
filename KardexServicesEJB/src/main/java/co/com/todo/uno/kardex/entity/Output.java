@@ -11,12 +11,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "entradas")
-public class Entry implements Serializable {
+@Table(name = "salidas")
+public class Output implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "entradas_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "entradas_seq", sequenceName = "entradas_seq", allocationSize = 1)
+    @GeneratedValue(generator = "salidas_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "salidas_seq", sequenceName = "salidas_seq", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 

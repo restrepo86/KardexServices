@@ -4,6 +4,7 @@ import co.com.todo.uno.kardex.domain.services.KardexDomainServices;
 import co.com.todo.uno.kardex.dto.EntryRequestDTO;
 import co.com.todo.uno.kardex.dto.KardexHttpResponseDTO;
 import co.com.todo.uno.kardex.dto.ProductRequestDTO;
+import co.com.todo.uno.kardex.dto.RegisterOutputRequestDTO;
 import co.com.todo.uno.kardex.mapper.response.HttpResponse;
 
 import javax.inject.Inject;
@@ -37,4 +38,13 @@ public class KardexServices {
         KardexHttpResponseDTO kardexHttpResponseDTO = kardexDomainServices.registerEntry(entryRequestDTO);
         return httpResponse.buildResponse(kardexHttpResponseDTO);
     }
+
+    @Path("/salida")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response registerOutput(RegisterOutputRequestDTO registerOutputRequestDTO) {
+        KardexHttpResponseDTO kardexHttpResponseDTO = kardexDomainServices.registerOutput(registerOutputRequestDTO);
+        return httpResponse.buildResponse(kardexHttpResponseDTO);
+    }
+
 }

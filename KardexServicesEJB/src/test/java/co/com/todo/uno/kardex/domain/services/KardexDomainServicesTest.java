@@ -2,13 +2,18 @@ package co.com.todo.uno.kardex.domain.services;
 
 import co.com.todo.uno.kardex.domain.validation.add.product.KardexAddProductValidations;
 import co.com.todo.uno.kardex.domain.validation.entry.KardexRegisterEntryValidations;
+import co.com.todo.uno.kardex.domain.validation.output.KardexRegisterOutputValidations;
 import co.com.todo.uno.kardex.dto.EntryRequestDTO;
 import co.com.todo.uno.kardex.dto.EntryValidationsDTO;
+import co.com.todo.uno.kardex.dto.OutputValidationsDTO;
 import co.com.todo.uno.kardex.dto.ProductRequestDTO;
 import co.com.todo.uno.kardex.dto.ProductValidationsDTO;
+import co.com.todo.uno.kardex.dto.RegisterOutputRequestDTO;
 import co.com.todo.uno.kardex.exceptions.KardexAddProductValidationsException;
 import co.com.todo.uno.kardex.exceptions.KardexRegisterEntryValidationsException;
+import co.com.todo.uno.kardex.exceptions.OutputValidationException;
 import co.com.todo.uno.kardex.services.EntryServices;
+import co.com.todo.uno.kardex.services.OutputServices;
 import co.com.todo.uno.kardex.services.ProductServices;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +28,10 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class KardexDomainServicesTest {
 
+    public static final long PRODUCT_ID = 1234l;
+    public static final long AMOUNT = 2l;
+    public static final long TOTAL_VALUE = 4l;
+    public static final long UNIT_VALUE = 2l;
     @InjectMocks
     private KardexDomainServices kardexDomainServices;
 
@@ -38,8 +47,15 @@ public class KardexDomainServicesTest {
     @Mock
     private KardexRegisterEntryValidations kardexRegisterEntryValidations;
 
+    @Mock
+    private OutputServices outputServices;
+
+    @Mock
+    private KardexRegisterOutputValidations kardexRegisterOutputValidations;
+
     private ProductRequestDTO productRequestDTO;
     private EntryRequestDTO entryRequestDTO;
+    private RegisterOutputRequestDTO registerOutputRequestDTO;
 
     @Before
     public void setUp() {
@@ -51,10 +67,16 @@ public class KardexDomainServicesTest {
         productRequestDTO.setMaximumAmount(60l);
 
         entryRequestDTO = new EntryRequestDTO();
-        entryRequestDTO.setProductId(1234l);
-        entryRequestDTO.setAmount(2l);
-        entryRequestDTO.setTotalValue(4l);
-        entryRequestDTO.setUnitValue(2l);
+        entryRequestDTO.setProductId(PRODUCT_ID);
+        entryRequestDTO.setAmount(AMOUNT);
+        entryRequestDTO.setTotalValue(TOTAL_VALUE);
+        entryRequestDTO.setUnitValue(UNIT_VALUE);
+
+        registerOutputRequestDTO = new RegisterOutputRequestDTO();
+        registerOutputRequestDTO.setProductId(PRODUCT_ID);
+        registerOutputRequestDTO.setAmount(AMOUNT);
+        registerOutputRequestDTO.setTotalValue(TOTAL_VALUE);
+        registerOutputRequestDTO.setUnitValue(UNIT_VALUE);
 
     }
 
@@ -80,6 +102,18 @@ public class KardexDomainServicesTest {
     public void shouldValidateEntryRequest() throws KardexRegisterEntryValidationsException {
         kardexDomainServices.registerEntry(entryRequestDTO);
         verify(kardexRegisterEntryValidations).execute(any(EntryValidationsDTO.class));
+    }
+
+    @Test
+    public void shouldRegisterOutputToInventory() {
+        kardexDomainServices.registerOutput(registerOutputRequestDTO);
+        verify(outputServices).registerOutput(registerOutputRequestDTO);
+    }
+
+    @Test
+    public void shouldValidateOutputRequestBeforeRegisterOutput() throws OutputValidationException {
+        kardexDomainServices.registerOutput(registerOutputRequestDTO);
+        verify(kardexRegisterOutputValidations).execute(any(OutputValidationsDTO.class));
     }
 
 }

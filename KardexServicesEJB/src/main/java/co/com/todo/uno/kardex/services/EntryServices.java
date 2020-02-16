@@ -25,10 +25,10 @@ public class EntryServices {
     private Entry buildEntry(EntryRequestDTO entryRequestDTO) {
         Entry entry = new Entry();
         entry.setAmount(entryRequestDTO.getAmount());
-        entry.setFecha(new Date());
+        entry.setDate(new Date());
         entry.setProductId(entryRequestDTO.getProductId());
-        entry.setValorUnitario(entryRequestDTO.getUnitValue());
-        entry.setValorTotal(entryRequestDTO.getTotalValue());
+        entry.setUnitValue(entryRequestDTO.getUnitValue());
+        entry.setTotalValue(entryRequestDTO.getTotalValue());
         return entry;
     }
 

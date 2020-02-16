@@ -4,6 +4,7 @@ import co.com.todo.uno.kardex.domain.services.KardexDomainServices;
 import co.com.todo.uno.kardex.dto.EntryRequestDTO;
 import co.com.todo.uno.kardex.dto.KardexHttpResponseDTO;
 import co.com.todo.uno.kardex.dto.ProductRequestDTO;
+import co.com.todo.uno.kardex.dto.RegisterOutputRequestDTO;
 import co.com.todo.uno.kardex.mapper.response.HttpResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +30,7 @@ public class KardexServicesTest {
     private ProductRequestDTO productRequestDTO;
     private KardexHttpResponseDTO kardexHttpResponseDTO;
     private EntryRequestDTO entryRequestDTO;
+    private RegisterOutputRequestDTO registerOutputRequestDTO;
 
     @Test
     public void shouldAddProductToInventory() {
@@ -45,8 +47,15 @@ public class KardexServicesTest {
 
     @Test
     public void shouldRegisterEntryToInventory() {
+        when(kardexDomainServices.registerEntry(entryRequestDTO)).thenReturn(kardexHttpResponseDTO);
         kardexServices.registerEntry(entryRequestDTO);
         verify(kardexDomainServices).registerEntry(entryRequestDTO);
+    }
+
+    @Test
+    public void shouldRegisterOutput() {
+        kardexServices.registerOutput(registerOutputRequestDTO);
+        verify(kardexDomainServices).registerOutput(registerOutputRequestDTO);
     }
 
 }
