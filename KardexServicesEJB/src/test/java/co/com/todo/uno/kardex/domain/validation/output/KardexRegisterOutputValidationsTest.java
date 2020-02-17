@@ -23,6 +23,9 @@ public class KardexRegisterOutputValidationsTest {
     @Mock
     private ProductIdExists productIdExists;
 
+    @Mock
+    private ThereIsInventoryOfProductToSell thereIsInventoryOfProductToSell;
+
     private OutputValidationsDTO outputValidationsDTO;
 
     @Test
@@ -35,6 +38,12 @@ public class KardexRegisterOutputValidationsTest {
     public void shouldValidateProductIdExists() throws OutputValidationException {
         kardexRegisterOutputValidations.execute(outputValidationsDTO);
         verify(productIdExists).validate(outputValidationsDTO);
+    }
+
+    @Test
+    public void shouldValidateProductExistsForAmountOutput() throws OutputValidationException {
+        kardexRegisterOutputValidations.execute(outputValidationsDTO);
+        verify(thereIsInventoryOfProductToSell).validate(outputValidationsDTO);
     }
 
 }

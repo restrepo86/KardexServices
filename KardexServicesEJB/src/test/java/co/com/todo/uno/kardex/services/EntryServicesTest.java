@@ -40,4 +40,10 @@ public class EntryServicesTest {
         verify(iEntryRepository).save(any(Entry.class));
     }
 
+    @Test
+    public void shouldFindAllEntriesByProductId() {
+        entryServices.findProductById(entryRequestDTO.getProductId());
+        verify(iEntryRepository).findByProductId(entryRequestDTO.getProductId());
+    }
+
 }

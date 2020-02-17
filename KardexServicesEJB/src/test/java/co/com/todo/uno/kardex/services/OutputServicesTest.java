@@ -36,4 +36,10 @@ public class OutputServicesTest {
         verify(iOutputRepository).save(any(Output.class));
     }
 
+    @Test
+    public void shouldFindByProductId() {
+        outputServices.findProductById(registerOutputRequestDTO.getProductId());
+        verify(iOutputRepository).findByProductId(registerOutputRequestDTO.getProductId());
+    }
+
 }

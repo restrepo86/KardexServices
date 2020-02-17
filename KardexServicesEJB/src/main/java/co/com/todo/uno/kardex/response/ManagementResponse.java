@@ -17,6 +17,7 @@ public final class ManagementResponse {
     private static final String EL_PRODUCTO_QUE_DESEA_AGREGAR_COMO_ENTRADA_AL_INVENTARIO_NO_EXISTE = "El producto que desea agregar como entrada al inventario no existe";
     private static final String LA_SALIDA_QUE_DESEA_REGISTRAR_POSEE_PROPIEDADES_VACIAS_O_DE_VALOR_CERO = "La salida que desea registrar posee propiedades vacias o de valor cero";
     private static final String EL_PRODUCTO_QUE_DESEA_AGREGAR_COMO_SALIDA_AL_INVENTARIO_NO_EXISTE = "El producto que desea agregar como salida al inventario no existe";
+    public static final String NO_HAY_LA_CANTIDAD_SUFICIENTE_DEL_PRODUCTO_AL_QUE_DESEA_DAR_SALIDA = "No hay la cantidad suficiente del producto al que desea dar salida";
 
     public static final String KARDEX_700 = "KARDEX_700";
     public static final String KARDEX_701 = "KARDEX_701";
@@ -27,6 +28,7 @@ public final class ManagementResponse {
     public static final String KARDEX_921 = "KARDEX_921";
     public static final String KARDEX_940 = "KARDEX_940";
     public static final String KARDEX_941 = "KARDEX_941";
+    public static final String KARDEX_942 = "KARDEX_942";
 
     public static final String KARDEX_800 = "KARDEX_800";
     public static final String KARDEX_801 = "KARDEX_801";
@@ -116,6 +118,8 @@ public final class ManagementResponse {
                     new KardexHttpResponseDTO(KARDEX_940, LA_SALIDA_QUE_DESEA_REGISTRAR_POSEE_PROPIEDADES_VACIAS_O_DE_VALOR_CERO, Response.Status.BAD_REQUEST));
             validationRegisterOutputResponses.put(KARDEX_941,
                     new KardexHttpResponseDTO(KARDEX_941, EL_PRODUCTO_QUE_DESEA_AGREGAR_COMO_SALIDA_AL_INVENTARIO_NO_EXISTE, Response.Status.BAD_REQUEST));
+            validationRegisterOutputResponses.put(KARDEX_942,
+                    new KardexHttpResponseDTO(KARDEX_942, NO_HAY_LA_CANTIDAD_SUFICIENTE_DEL_PRODUCTO_AL_QUE_DESEA_DAR_SALIDA, Response.Status.BAD_REQUEST));
         }
     }
 

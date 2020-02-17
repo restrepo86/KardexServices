@@ -9,6 +9,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import java.util.Date;
+import java.util.List;
 
 @Stateless
 public class OutputServices {
@@ -32,4 +33,7 @@ public class OutputServices {
         return output;
     }
 
+    public List<Output> findProductById(Long productId) {
+        return iOutputRepository.findByProductId(productId);
+    }
 }

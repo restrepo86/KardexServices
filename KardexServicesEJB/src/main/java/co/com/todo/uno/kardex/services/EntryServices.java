@@ -9,6 +9,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import java.util.Date;
+import java.util.List;
 
 @Stateless
 public class EntryServices {
@@ -30,6 +31,11 @@ public class EntryServices {
         entry.setUnitValue(entryRequestDTO.getUnitValue());
         entry.setTotalValue(entryRequestDTO.getTotalValue());
         return entry;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Entry> findProductById(Long productId) {
+        return iEntryRepository.findByProductId(productId);
     }
 
 }
